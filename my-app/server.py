@@ -10,7 +10,9 @@ import time
 import requests
 import io
 from huggingface_hub import InferenceClient
+from audio_extract import extract_audio
 import os
+from deep_translator import GoogleTranslator
 
 
 app = Flask(__name__)
@@ -119,6 +121,44 @@ def learnBot():
     input_text = input_data.get("text", "")
     image_base64 = input_data.get("image", "")
 
+    time.sleep(3)
+
+    downloads_path = get_downloads_folder()
+    file_name = "audio.wav"
+    audio_file_path = os.path.join(downloads_path, file_name)
+
+    if os.path.exists(audio_file_path):
+
+        generation_config = {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 40,
+            "max_output_tokens": 8192,
+            "response_mime_type": "text/plain",
+        }
+
+        model_analyze = genai.GenerativeModel(
+            model_name="gemini-2.0-flash-exp",
+            generation_config=generation_config,
+        )
+
+        files_audio = [
+            upload_to_gemini(audio_file_path, mime_type="audio/mp3"),
+        ]
+
+        file_uri_audio = files_audio[0]
+
+        response_audio = model_analyze.generate_content(
+            ["What is said here?", file_uri_audio],
+            request_options={"timeout": 600}
+        )
+
+        print(response_audio.text)
+
+        input_text = response_audio.text
+
+        os.remove(audio_file_path)
+
     image = None
     if image_base64:
         try:
@@ -139,7 +179,7 @@ def learnBot():
             prompt = "Explain this image in a simple way for children."
             response = model.generate_content([prompt, image])
         elif input_text:
-            prompt = f"Explain this text in a simple way for children: {input_text}"
+            prompt = f"Analyze the input text and detect its language. Text Respond in the same language by explaining the text in a simple way suitable for children. Ensure the explanation is clear, concise, and easy to understand also do not give long responses.: {input_text}"
             response = model.generate_content(prompt)
         else:
             return jsonify({"error": "No valid input provided"}), 400
@@ -167,6 +207,21 @@ def get_downloads_folder():
     home = os.path.expanduser("~")
     downloads_folder = os.path.join(home, "Downloads")
     return downloads_folder
+
+def upload_to_gemini(path, mime_type=None):
+  """Uploads the given file to Gemini.
+
+  See https://ai.google.dev/gemini-api/docs/prompting_with_media
+  """
+  file = genai.upload_file(path, mime_type=mime_type)
+  print(f"Uploaded file '{file.display_name}' as: {file.uri}")
+  return file
+
+def translate_me_baby(text, lan):
+    translated = GoogleTranslator(source='auto', target=f"{lan}").translate(text)
+    return translated
+
+
 @app.route("/VideoAnalyzer", methods=["GET"])
 def videoAnalyzer():
     downloads_path = get_downloads_folder()
