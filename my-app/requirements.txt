@@ -4,6 +4,8 @@ aiosignal==1.3.2
 annotated-types==0.7.0
 anyio==4.7.0
 attrs==24.3.0
+audio_extract==0.7.0
+beautifulsoup4==4.12.3
 blinker==1.9.0
 cachetools==5.5.0
 certifi==2024.12.14
@@ -11,11 +13,14 @@ charset-normalizer==3.4.1
 click==8.1.8
 colorama==0.4.6
 dataclasses-json==0.6.7
+deep-translator==1.11.4
+ffmpeg-python==0.2.0
 filelock==3.16.1
 Flask==3.1.0
 Flask-Cors==5.0.0
 frozenlist==1.5.0
 fsspec==2024.12.0
+future==1.0.0
 google-ai-generativelanguage==0.6.10
 google-api-core==2.24.0
 google-api-python-client==2.156.0
@@ -33,8 +38,10 @@ httpx==0.28.1
 httpx-sse==0.4.0
 huggingface-hub==0.27.1
 idna==3.10
+imageio-ffmpeg==0.4.8
 itsdangerous==2.2.0
 Jinja2==3.1.5
+joblib==1.4.2
 jsonpatch==1.33
 jsonpointer==3.0.0
 langchain==0.3.13
@@ -45,6 +52,7 @@ langsmith==0.2.6
 MarkupSafe==3.0.2
 marshmallow==3.23.2
 multidict==6.1.0
+mutagen==1.46.0
 mypy-extensions==1.0.0
 numpy==2.2.1
 orjson==3.10.12
@@ -64,9 +72,14 @@ PyYAML==6.0.2
 requests==2.32.3
 requests-toolbelt==1.0.0
 rsa==4.9
+scikit-learn==1.6.1
+scipy==1.15.1
+setuptools==75.8.0
 sniffio==1.3.1
+soupsieve==2.6
 SQLAlchemy==2.0.36
 tenacity==9.0.0
+threadpoolctl==3.5.0
 tqdm==4.67.1
 typing-inspect==0.9.0
 typing_extensions==4.12.2
