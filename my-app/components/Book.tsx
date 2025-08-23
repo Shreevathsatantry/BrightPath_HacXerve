@@ -13,10 +13,13 @@ export default function Book({ storyData }: { storyData: string }) {
 
   console.log('Story data in Book component:', storyData);
 
-  const pages = storyData.response.split('\n\n').map((paragraph, index) => ({
-    content: paragraph.trim(),
-    image: `/Images/Image${index}.png?timestamp=${new Date().getTime()}`, // Force cache refresh
-  })); 
+  // ...existing code...
+const storyText = typeof storyData === "string" ? storyData : storyData.response ?? "";
+const pages = storyText.split('\n\n').map((paragraph, index) => ({
+  content: paragraph.trim(),
+  image: `/Images/Image${index}.png?timestamp=${new Date().getTime()}`,
+}));
+// ...existing code...
   const stopReading = () => {
     window.speechSynthesis.cancel();
   };

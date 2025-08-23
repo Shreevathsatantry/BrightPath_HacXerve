@@ -66,16 +66,16 @@ export default function StoryInput({ onSubmit, triggerCanvasDownload }: StoryInp
       </div>
 
       {isLoading && (
-        <div className="absolute inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          {/* Lottie Animation when loading */}
-          <DotLottieReact
-            src="https://lottie.host/0a3953a1-9b48-4f73-802a-2907396bd130/3ZQdaFlPBZ.lottie"
-            loop
-            autoplay
-            style={{ width: "150vw", height: "200vh" }} // Customize size of the animation
-          />
-        </div>
-      )}
+  <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90 z-50">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid mx-auto mb-4"></div>
+      <p className="text-lg font-semibold text-blue-700">Loading your story...</p>
+    </div>
+  </div>
+)}
+
+
+
     </div>
   )
 }
