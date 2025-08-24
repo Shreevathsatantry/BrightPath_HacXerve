@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next' // Import useTranslation from i18
 
 const navItems = [
   { name: 'Home', icon: Home, href: '/' },
+  { name: 'SignUp', icon: Home, href: '/Auth' },
   { name: 'Games', icon: Gamepad2, href: '/Games' },
   { name: 'Stories', icon: Book, href: '/story-creator' },
   { name: 'Learn', icon: Book, href: '/Learn_chatbot/chatbot' },
